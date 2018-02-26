@@ -1,0 +1,15 @@
+<% @ideas.each do |idea| %>
+  <div class="container1"
+    style="margin-top: 70px">
+    <div class="ideas_index_container2">
+      <div class="" style="font-size: large">
+        <%= link_to idea.title, idea_path(idea) %> <br>
+      </div>
+
+      <div class="ideas_index_body">
+        <%= idea.description %>
+      </div>
+
+    </div>
+  </div>
+<% end %>
