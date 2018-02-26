@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Idea.destroy_all
+
+100.times.each do
+Idea.create(
+  title: Faker::ProgrammingLanguage.name,
+  description: Faker::Lorem.paragraph
+)
+end
+
+ideas = Idea.all
+
+puts Cowsay.say "Created #{ideas.count} ideas", :frogs
