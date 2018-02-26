@@ -1,13 +1,13 @@
 class IdeasController < ApplicationController
-
+  before_action :find_idea, except: [:new, :index, :create]
   def index
     @ideas = Idea.order(created_at: :desc)
   end
 
   def show
-    @idea = Idea.find params[:id]
-    # @comment = Comment.new
-    # @comments = @post.comments.order(created_at: :desc)
+    # @idea = Idea.find params[:id]
+    @review = Review.new
+    @reviews = @idea.reviews.order(created_at: :desc)
   end
 
   def new
@@ -31,11 +31,11 @@ class IdeasController < ApplicationController
   end
 
   def edit
-    @idea = Idea.find params[:id]
+    # @idea = Idea.find params[:id]
   end
 
   def update
-    @idea = Idea.find params[:id]
+    # @idea = Idea.find params[:id]
 
     if @idea.update idea_params
       redirect_to '/'
@@ -46,7 +46,7 @@ class IdeasController < ApplicationController
   end
 
   def destroy
-    @idea = Idea.find params[:id]
+    # @idea = Idea.find params[:id]
 
     @idea.destroy
 
@@ -54,6 +54,10 @@ class IdeasController < ApplicationController
   end
 
   private
+  def find_idea
+    @idea = Idea.find params[:id]
+  end
+
   def idea_params
     params.require(:idea).permit(:title, :description)
   end

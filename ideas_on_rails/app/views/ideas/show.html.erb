@@ -19,9 +19,7 @@
     <%= time_ago_in_words(@idea.updated_at) %>
     ago
   </div>
-
 <!--  incluir a Div By ..... [DELETED}]-->
-
   <div>
     <br>
 
@@ -37,6 +35,54 @@
 
   </div>
 
+  <div class="container_reviews"
+        style="margin-top: 20px">
 
+    <%= form_for [@idea, @review] do |f| %>
+      <% if @review.errors.present? %>
+        <p>
+          <%= @review.errors.full_messages.join(', ') %>
+        </p>
+      <% end %>
 
+      <div style="font-size: large">
+        <%= f.label :Review %><br>
+        <%= f.text_area :body, placeholder: "What's on your mind?", class: "form-control"%>
+      </div>
+
+      <div class="" style="margin-top: 20px" >
+        <%= f.submit  "Submit", class: "btn btn-outline-dark" %>
+      </div>
+    <% end %>
+
+    <div class="" style="margin-top: 20px">
+      <% @reviews.each do |review| %>
+        <div class="" style="margin-bottom: 10px">
+          <div class="" style="font-size: medium">
+            <%= review.body%>
+          </div>
+
+          <div style="font-size: medium">
+            <small>
+              Reviewed
+              <%= time_ago_in_words(review.created_at) %>
+              ago
+            </small>
+            •
+            <small>
+              <%= link_to 'Delete',
+              review_path(review),
+              method: :delete,
+              data: { confirm: 'Are you sure?' }
+              %>
+            </small>
+            •
+            <!--  incluir a Div By ..... [DELETED}]-->
+
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
 </div>

@@ -7,14 +7,25 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 Idea.destroy_all
+Review.destroy_all
 
-100.times.each do
-Idea.create(
-  title: Faker::ProgrammingLanguage.name,
-  description: Faker::Lorem.paragraph
-)
+50.times.each do
+  i=Idea.create(
+    title: Faker::ProgrammingLanguage.name,
+    description: Faker::Lorem.paragraph
+  )
+  if i.valid?
+    rand(0..10).times.each do
+      Review.create(
+        body: Faker::Seinfeld.quote,
+        idea: i
+      )
+    end
+  end
 end
 
 ideas = Idea.all
+reviews = Review.all
 
 puts Cowsay.say "Created #{ideas.count} ideas", :frogs
+puts Cowsay.say "Created #{reviews.count} reviews", :sheep
