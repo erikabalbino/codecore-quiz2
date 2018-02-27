@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
   before_action :authenticate_user!
+  before_action :find_review, :authorize_user!, only: [:destroy]
 
   def create
     @idea = Idea.find params[:idea_id]
@@ -16,14 +17,26 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-    review = Review.find params[:id]
-    review.destroy
+    # review = Review.find params[:id]
+    @review.destroy
 
-    redirect_to idea_path(review.idea)
+    redirect_to idea_path(@review.idea)
   end
 
   private
   def review_params
     params.require(:review).permit(:body)
   end
+
+  def find_review
+    @review ||= Review.find params[:id]
+  end
+
+  def authorize_user!
+    unless can?(:manage, @review)
+      flash[:alert] = 'Access Denied!'
+      redirect_to idea_path(@review.idea)
+    end
+  end
+
 end
