@@ -9,12 +9,11 @@
   </head>
 
   <body>
-    <nav class="navbar fixed-top bg-light justify-content-between">
+    <nav class="navbar fixed-top  navbar-light bg-light">
       <div class="">
-        <a class="navbar-brand" style="color: black" href="/">Idea Factory</a>
+        <a class="navbar-brand" style="color: black; font-size: 2rem" href="/">Idea Factory</a>
       </div>
       <div class="form-inline">
-
         <% if user_signed_in? %>
           <span> Hello, <%=current_user.first_name%> !</span>
           |
@@ -28,7 +27,7 @@
       </div>
     </nav>
 
-    <div class="container-fluid" style="margin-top: 60px">
+    <div class="container-fluid" style="margin-top: 90px">
       <% if flash[:notice].present? %>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
           <%= flash[:notice] %>
