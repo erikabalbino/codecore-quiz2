@@ -1,0 +1,96 @@
+<div class="ideas_show_container" style="margin-top: 90px">
+
+  <div class="" style="font-size: large">
+    <h2><%= @idea.title %></h2>
+  </div>
+
+  <div class="" style="font-size: medium">
+    <p><%= @idea.description  %></p>
+  </div>
+
+  <div style="font-size: small">
+    Posted
+    <%= time_ago_in_words(@idea.created_at) %>
+    ago
+  </div>
+  •
+  <div style="font-size: small">
+    Last edited
+    <%= time_ago_in_words(@idea.updated_at) %>
+    ago
+  </div>
+  •
+  <div class="">
+      By <%= @idea.user&.full_name || '[DELETED]' %>
+  </div>
+
+  <div>
+    <br>
+      <% if can?(:update, @idea) %>
+        <%= link_to 'Edit', edit_idea_path(@idea), class: "btn btn-outline-dark" %>
+      <% end %>
+      <% if can?(:destroy, @idea) %>
+        <%= link_to 'Delete', idea_path(@idea),
+          method: :delete,
+          data: {
+            confirm: 'Are you sure?'
+          }, class: "btn btn-outline-dark"
+        %>
+      <% end %>
+  </div>
+
+  <div class="container_reviews"
+        style="margin-top: 20px">
+
+    <%= form_for [@idea, @review] do |f| %>
+      <% if @review.errors.present? %>
+        <p>
+          <%= @review.errors.full_messages.join(', ') %>
+        </p>
+      <% end %>
+
+      <div style="font-size: large">
+        <%= f.label :Review %><br>
+        <%= f.text_area :body, placeholder: "What's on your mind?", class: "form-control"%>
+      </div>
+
+      <div class="" style="margin-top: 20px" >
+        <%= f.submit  "Submit", class: "btn btn-outline-dark" %>
+      </div>
+    <% end %>
+
+    <div class="" style="margin-top: 20px">
+      <% @reviews.each do |review| %>
+        <div class="" style="margin-bottom: 10px">
+          <div class="" style="font-size: medium">
+            <%= review.body%>
+          </div>
+
+          <div style="font-size: medium">
+            <small>
+              Reviewed
+              <%= time_ago_in_words(review.created_at) %>
+              ago
+            </small>
+            •
+            <small>
+              By <%= review.user&.full_name || '[DELETED]' %>
+            </small>
+            <% if can?(:destroy, review) %>
+            •
+              <small>
+                <%= link_to 'Delete',
+                  review_path(review),
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' }
+                %>
+              </small>
+            <% end %>
+
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>

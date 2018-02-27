@@ -5,3 +5,57 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+PASSWORD = 'supersecret'
+
+User.destroy_all
+Idea.destroy_all
+Review.destroy_all
+
+super_user = User.create(
+  first_name: 'Jon',
+  last_name: 'Snow',
+  email: 'js@winterfell.gov',
+  password: PASSWORD
+)
+
+10.times.each do
+  first_name = Faker::Name.first_name
+  last_name = Faker::Name.last_name
+
+  User.create(
+    first_name: first_name,
+    last_name: last_name,
+    email: "#{first_name.downcase}.#{last_name.downcase}@example.com",
+    password: PASSWORD
+  )
+end
+
+users = User.all
+
+puts Cowsay.say "Created #{users.count} users", :tux
+
+50.times.each do
+  i=Idea.create(
+    title: Faker::ProgrammingLanguage.name,
+    description: Faker::Lorem.paragraph,
+    user: users.sample
+  )
+  if i.valid?
+    rand(0..10).times.each do
+      Review.create(
+        body: Faker::Seinfeld.quote,
+        idea: i,
+        user: users.sample
+      )
+    end
+  end
+end
+
+ideas = Idea.all
+reviews = Review.all
+
+puts Cowsay.say "Created #{ideas.count} ideas", :frogs
+puts Cowsay.say "Created #{reviews.count} reviews", :sheep
+
+puts "Login with #{super_user.email} and password of '#{PASSWORD}'"
