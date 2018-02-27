@@ -1,5 +1,8 @@
 class IdeasController < ApplicationController
+
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :find_idea, except: [:new, :index, :create]
+  
   def index
     @ideas = Idea.order(created_at: :desc)
   end
@@ -17,7 +20,7 @@ class IdeasController < ApplicationController
 
   def create
     @idea = Idea.new idea_params
-    # @idea.user = current_user
+    @idea.user = current_user
 
     if @idea.save
       redirect_to '/'

@@ -19,7 +19,11 @@
     <%= time_ago_in_words(@idea.updated_at) %>
     ago
   </div>
-<!--  incluir a Div By ..... [DELETED}]-->
+  •
+  <div class="">
+      By <%= @idea.user&.full_name || '[DELETED]' %>
+  </div>
+
   <div>
     <br>
 
@@ -70,14 +74,16 @@
             </small>
             •
             <small>
+              By <%= review.user&.full_name || '[DELETED]' %>
+            </small>
+            •
+            <small>
               <%= link_to 'Delete',
               review_path(review),
               method: :delete,
               data: { confirm: 'Are you sure?' }
               %>
             </small>
-            •
-            <!--  incluir a Div By ..... [DELETED}]-->
 
           </div>
         </div>

@@ -1,9 +1,11 @@
 class ReviewsController < ApplicationController
+  before_action :authenticate_user!
+
   def create
     @idea = Idea.find params[:idea_id]
     @review = Review.new review_params
     @review.idea = @idea
-    # @comment.user = current_user
+    @review.user = current_user
 
     if @review.save
       redirect_to idea_path(@idea)
